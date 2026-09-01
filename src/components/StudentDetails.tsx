@@ -166,7 +166,9 @@ export function StudentDetails() {
                                         <Card>
                                             <ListItem>
                                                 <ListItemText primary="Notable Connections" secondary={Student.connections.map((connection) => {
-                                                    if (typeof connection.name === "string") {
+                                                    if (typeof connection === "string") {
+                                                        return <>{connection}<br /></>
+                                                    } else if (typeof connection.name === "string") {
                                                         return <><Link to={getStudentByShortName(connection.name) ?
                                                             `/student/${connection.name}` : `/faculty/${connection.name}`}>
                                                             {connection.name}
@@ -175,7 +177,7 @@ export function StudentDetails() {
                                                         return <>{connection.name.map((name, i) =>
                                                             <>
                                                             <Link to={getStudentByShortName(name) ?
-                                                                `/student/${connection.name}` : `/faculty/${connection.name}`}>
+                                                                `/student/${name}` : `/faculty/${name}`}>
                                                                 {name}
                                                             </Link>{i < connection.name.length - 1 ? ", " : ""}
                                                                 </>)}

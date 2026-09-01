@@ -7,7 +7,7 @@ pronouns: string
 shortName: string,
 frequents: Location[],
 image?: string
-connections?: Connection[]
+connections?: (Connection | string)[]
 appearance?: Appearance
 }
 

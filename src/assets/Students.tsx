@@ -1,7 +1,7 @@
 import { Class, Club, Job, Location, School, Student } from "./Models"
 import { BOOK_CLUB, CHEER, DEAD_LANGUAGES, DEBATE, DRAGONCHESS, ENTREPRENEURS, FAITH, FINE_ARTS, HORTICULTURE, LIFTERS, MAGE_TOWER, PARTY, BAND, SILKBALL, SPARRING, STAR } from "./Clubs"
 import { BARISTA, GROUNDS_DRAG, GROUNDS_FENS, LABS, LIBRARIAN, RA_LORE, RA_PRIS, RA_QUAN, RA_SILV, RA_WITH, TA_ROVINA, WAITER } from "./Jobs"
-import { ARITHMODROME, BIBLIOPLEX, BLISS_HALL, BOG, CAFE, COMMONS, CONSULARIUM, CULTIVARIUM, DORMS_COMMON, DORMS_PRIS, DRAGONSBREATH, FENS, PILLARDROP, ROSE_STAGE, STADIUM, TAVERN, WHITERAVEN } from "./Locations"
+import { ARITHMODROME, BIBLIOPLEX, BLISS_HALL, BOG, CAFE, COMMONS, CONSULARIUM, CULTIVARIUM, DORMS_COMMON, DORMS_LORE, DORMS_PRIS, DRAGONSBREATH, FENS, PILLARDROP, ROSE_STAGE, STADIUM, TAVERN, WHITERAVEN } from "./Locations"
 import Cass from "./images/people/Cass.png"
 import Dusty from "./images/people/Dusty.png"
 import Ace from "./images/people/Ace.png"
@@ -63,7 +63,8 @@ export const STUDENTS: Student[] = [
         connections: [
             {name: "Dusty", relation: "Childhood best friend"},
             {name: "Zoey", relation: "Hasn't officially asked out"},
-            {name: "Jasmine", relation: "A more recent but still good friend"}
+            {name: "Jasmine", relation: "A more recent but still good friend"},
+            "He is the primary facilitator of Book Club and knows its members well."
         ],
         advisors: ["Maddox", "Mara"],
     },
@@ -226,7 +227,8 @@ export const STUDENTS: Student[] = [
             {name: "Zoey", relation: "Gruffer counterpart to her classier Queen Bee side of their clique"},
             {name: ["Pyre", "Jasmine", "Grace"], relation: "Also in her clique"},
             {name: "Carrion", relation: "In the clique but has a quiet rivalry with"},
-            {name: ["Felix, Ariel"], relation: "Had a fling with last Masquerade"},
+            {name: ["Felix", "Ariel"], relation: "Had a fling with last Masquerade"},
+            "A mystery professor who she slept with."
         ]
     },
     {
@@ -269,17 +271,25 @@ export const STUDENTS: Student[] = [
         image: Farren
     },
     {
-        name: 'Jasmine',
+        name: 'Jasmine Bennett',
         shortName: "Jasmine",
         pronouns: "She/Her",
+        appearance: {height: `5'6"`, eyes: "Blue", hair: "Ginger", other: ["Freckles"]},
         year: "4th",
         school: "Lorehold",
         jobs: [RA_LORE],
         clubs: [BOOK_CLUB, SPARRING, ENTREPRENEURS, PARTY].sort((a,b) => {return a.name.localeCompare(b.name)}),
-        frequents: [],
+        frequents: [BIBLIOPLEX, COMMONS, DORMS_LORE],
         freshRoomies: ["Ariel", "Hildegard"].sort(),
         roommates: ["Zoey"],
-        image: Jasmine
+        image: Jasmine,
+        connections: [
+            {name: "Zoey", relation: "Roommate and good friend"},
+            {name: "Hennie", relation: "Looks out for"},
+            {name: ["Pyre", "Alexis", "Carrion"], relation: "In Zoey's friend group"},
+            {name: "Dusty", relation: "Frequent adventure partner"},
+            {name: "Felix", relation: "Fucked despite her wariness of his views on Shaw and Hennie"}
+        ]
     },
     {
         name: 'Brynn Alfyr',
@@ -356,15 +366,21 @@ export const STUDENTS: Student[] = [
         name: 'Lux Allans',
         shortName: "Lux",
         pronouns: "They/Them",
+        appearance: {height: `5'8"`, eyes: "Golden", hair: "Golden"},
         year: "3rd",
         school: "Witherbloom",
         jobs: [BARISTA, WAITER].sort((a,b) => {return a.name.localeCompare(b.name)}),
         clubs: [HORTICULTURE, PARTY].sort((a,b) => {return a.name.localeCompare(b.name)}),
-        frequents: [FENS, BIBLIOPLEX, TAVERN, CONSULARIUM, ROSE_STAGE].sort((a,b) => {return a.name.localeCompare(b.name)}),
+        frequents: [FENS, ROSE_STAGE].sort((a,b) => {return a.name.localeCompare(b.name)}),
         roommates: ["Sasha"],
         freshRoomies: ["Ray", "Sasha"].sort(),
         image: Lux,
-        connections: [{name: "Zoey", relation: "Sister"}],
+        connections: [
+            {name: "Felix", relation: "Friend who they deeply admire and respect but also feel indebted to for all he's done to draw them out of their shell"},
+            {name: "Sasha", relation: "Person they think of first"},
+            {name: "Zoey", relation: "Elder sister whose approval they sought until the incident that led to Sasha's death"},
+            {name: "Grace", relation: "Coworker at the fire jolt and the little sister their sister always wanted. Normal feelings about that"}
+        ],
         advisors: ["Arabella", "Eloise"]
     },
     {
@@ -502,6 +518,7 @@ export const STUDENTS: Student[] = [
         name: 'Hendrika Vann Dalen',
         shortName: "Hennie",
         pronouns: "She/Her",
+        appearance: {height: `5'5"`, eyes: "Brown", hair: "Blonde", other: ["Tan skin"]},
         year: "2nd",
         school: "Prismari",
         jobs: [],
@@ -510,14 +527,21 @@ export const STUDENTS: Student[] = [
         freshRoomies: ["Zephyr", "Shaw"].sort(),
         roommates: ["Grace", "Elowen"],
         image: Hennie,
-        connections: [{name: "Thijs", relation: "Brother"}],
+        connections: [
+            {name: "Thijs", relation: "Stick-in-the-mud older brother"},
+            {name: "Shaw", relation: "'Amicable' ex she dated on and off through first year, messily"},
+            {name: ["Grace", "Brilliance", "Zephyr"], relation: "Helped her through her breakup first year"},
+            {name: ["Jewel", "Zinnia"], relation: "Also in that friend group"},
+            {name: "Odette", relation: "Really admires as the cheer captain"},
+            {name: "Jasmine", relation: "Is doing her best to be a girl's girl for her"}
+        ],
         advisors: ["Odette", "Valora"]
     },
     {
         name: 'Jewel',
         shortName: "Jewel",
         pronouns: "She/Her",
-        appearance: {height: `5'`, hair: "White", eyes: "Pink", other: ["Pink Crystals"]},
+        appearance: {height: `5'`, hair: "White", eyes: "Pink", other: ["Pink crystals pockmarking her skin"]},
         year: "2nd",
         school: "Quandrix",
         jobs: [],
@@ -629,7 +653,7 @@ export const STUDENTS: Student[] = [
         image: Cerise
     },
     {
-        name: 'Kassandra "Andy" Lebowitz',
+        name: 'Andrea "Andy" Lebowitz',
         shortName: "Andy",
         pronouns: "She/Her",
         appearance: {height: `6'`, hair: "Red Mane", eyes: "Dark", other: ["Glasses"]},
@@ -645,7 +669,8 @@ export const STUDENTS: Student[] = [
         connections: [
             {name: "Thijs", relation: "Best friend in haterism, and only real friend on campus"},
             {name: "Tomas", relation: "Tormentor and sexually charged enemy on the Star's writing staff"},
-            {name: "Jewel", relation: "Academic rival"}
+            {name: "Jewel", relation: "Academic rival"},
+            "Her best friend and crush, you wouldn't know him, he doesn't go here"
         ]
     },
     {

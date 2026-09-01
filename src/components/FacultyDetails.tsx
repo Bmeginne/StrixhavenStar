@@ -145,7 +145,9 @@ export function FacultyDetails() {
                                         {Faculty.connections &&
                                             <ListItem>
                                                 <ListItemText primary="Notable Connections" secondary={Faculty.connections.map((connection) => {
-                                                    if (typeof connection.name === "string") {
+                                                    if (typeof connection === "string") {
+                                                        return <>{connection}<br /></>
+                                                    } else if (typeof connection.name === "string") {
                                                         return <><Link to={getFacultyByShortName(connection.name) ?
                                                             `/faculty/${connection.name}` : `/student/${connection.name}`}>
                                                             {connection.name}
