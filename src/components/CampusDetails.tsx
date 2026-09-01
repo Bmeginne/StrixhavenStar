@@ -108,7 +108,7 @@ export function CampusDetails() {
                                         return <>
                                             <Link to={`/faculty/${prof.shortName}`}>
                                                 {prof.shortName}
-                                            </Link>, {prof.title}{i < getFacultyBySchool(Campus.name).length - 1 ? "; " : ""}
+                                            </Link>, {prof.title} of {prof.dichotomy}{i < getFacultyBySchool(Campus.name).length - 1 ? "; " : ""}
                                         </>
                                     })} />
                                 </ListItem>

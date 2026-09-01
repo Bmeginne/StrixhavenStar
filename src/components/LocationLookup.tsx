@@ -13,7 +13,7 @@ export function LocationLookup() {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
     useEffect(() => {
-        apiRef.current?.autosizeColumns({ includeHeaders: true })
+        apiRef.current?.autosizeColumns({ includeHeaders: true, includeOutliers: true, expand: true })
     })
 
     const paginationModel = { page: 0, pageSize: isMobile ? 100 : 10 };
@@ -80,7 +80,7 @@ export function LocationLookup() {
             }
         },
         {
-            field: 'clubs', headerName: 'Clubs', minWidth: 550,
+            field: 'clubs', headerName: 'Clubs',
             valueGetter: (params: Club[]) => {
                 return params.flatMap((club: Club) => club.shortName).join(", ")
             },
@@ -126,6 +126,11 @@ export function LocationLookup() {
                         }}
                         hideFooterPagination={isMobile}
                         pageSizeOptions={isMobile ? [100] : [10]}
+                        autosizeOptions={{
+                            includeHeaders: true,
+                            includeOutliers: true,
+                            expand: true,
+                        }}
                     />
                 </Grid>
             </Grid>

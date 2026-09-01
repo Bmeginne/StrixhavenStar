@@ -309,6 +309,7 @@ export const STUDENTS: Student[] = [
         name: 'Cyr Kostakis',
         shortName: "Cyr",
         pronouns: "He/Him",
+        appearance: {height: `5'6"`, eyes: "Dark", hair: "Black with a purple streak"},
         year: "3rd",
         school: "Silverquill",
         jobs: [BARISTA].sort((a,b) => {return a.name.localeCompare(b.name)}),
@@ -317,7 +318,13 @@ export const STUDENTS: Student[] = [
         roommates: ["Worth", "Ciaran"],
         freshRoomies: ["Brynn", "Elowen"].sort(),
         image: Cyr,
-        // connections: ["Lilia"]
+        connections: [
+            {name: "Ramona", relation: "Goth elder he admires"},
+            {name: "Ace", relation: "Protected him pre-transition"},
+            {name: "Lux", relation: "Chicken who recognized an egg before he did"},    
+            "Lilia, his other half",
+            "Smithers, the ghost of some old guy he likes to summon"
+        ],
         advisors: ["Emerson"]
     },
     {

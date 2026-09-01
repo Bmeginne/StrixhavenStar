@@ -11,7 +11,7 @@ export function FacultyLookup() {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
     useEffect(() => {
-        apiRef.current?.autosizeColumns({ includeHeaders: true })
+        apiRef.current?.autosizeColumns({ includeHeaders: true, includeOutliers: true, expand: true })
     })
 
     const paginationModel = { page: 0, pageSize: isMobile ? 100 : 12 };
@@ -64,7 +64,7 @@ export function FacultyLookup() {
             }
         },
         {
-            field: 'clubs', headerName: 'Clubs', minWidth: isMobile ? 350 : 500,
+            field: 'clubs', headerName: 'Clubs', minWidth: 350,
             valueGetter: (params: Club[]) => {
                 return params.flatMap((club) => club.shortName).join(", ")
             },

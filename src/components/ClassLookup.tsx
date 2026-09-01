@@ -12,7 +12,7 @@ export function ClassLookup() {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
     
     useEffect(() => {
-        apiRef.current?.autosizeColumns({ includeHeaders: true })
+        apiRef.current?.autosizeColumns({ includeHeaders: true, includeOutliers: true, expand: true })
     })
 
     const paginationModel = { page: 0, pageSize: isMobile ? 100 : 10 };
