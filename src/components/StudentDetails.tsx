@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getArticlesByTag } from "../assets/Articles";
 import { theme } from "../Theme";
 import NewspaperIcon from '@mui/icons-material/Newspaper';
+import { getFacultyByShortName } from "../assets/Faculty";
 // import { ScheduleGrid } from "./ScheduleGrid";
 
 export function StudentDetails() {
@@ -32,26 +33,26 @@ export function StudentDetails() {
                 {Student ?
                     <>
                         <Grid container size={12} sx={{ alignItems: "flex-start" }}>
-                            <Grid size={{xs: "grow", sm: "auto" }}>
+                            <Grid size={{ xs: "grow", sm: "auto" }}>
                                 <Typography variant="h4">
                                     {Student?.name} ({Student.pronouns})
                                 </Typography>
                             </Grid>
                             {
                                 logo ?
-                                    <Grid size={{xs: 1.5, sm: "grow"}}>
+                                    <Grid size={{ xs: 1.5, sm: "grow" }}>
                                         <Box
                                             sx={{ width: 50, height: 50, marginTop: 0 }}
                                             component="img"
                                             src={logo}
-                                            alt={Student.name}
+                                            alt={Student.school}
                                         />
                                     </Grid>
                                     : null
                             }
                             {isMobile && articles.length > 0 &&
                                 <Grid >
-                                    <IconButton size={"large"} onClick={() => {setOpen(true)}} sx={{ padding: "2px" }}>
+                                    <IconButton size={"large"} onClick={() => { setOpen(true) }} sx={{ padding: "2px" }}>
                                         <NewspaperIcon sx={{ fontSize: "3rem" }} />
                                     </IconButton>
                                 </Grid>
@@ -61,7 +62,7 @@ export function StudentDetails() {
                             Student.image ? <Grid>
                                 <Card>
                                     <CardMedia
-                                        height={300}
+                                        height={isMobile ? 200 : 300}
                                         component="img"
                                         image={Student.image}
                                         alt={Student.name}
@@ -71,16 +72,47 @@ export function StudentDetails() {
                                 : null
                         }
                         {/* <ScheduleGrid/> */}
-
+                        { Student.appearance && 
+                            <Grid size={{xs: 4.7, lg:3.3}}>
+                                <List component={Paper}>
+                                    <ListItem>
+                                        <ListItemText primary={"Height"} secondary={Student.appearance?.height} />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemText primary={"Eyes"} secondary={Student.appearance?.eyes} />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemText primary={"Hair"} secondary={Student.appearance?.hair} />
+                                    </ListItem>
+                                    {Student.appearance?.other &&
+                                        <ListItem>
+                                            <ListItemText primary={"Other"} secondary={Student.appearance?.other?.map((detail, i) =>
+                                                <>{detail}{i < Student.appearance!.other!.length - 1 ? <>,<br /></> : <></>}</>
+                                            )} />
+                                        </ListItem>
+                                    }
+                                </List>
+                            </Grid>
+                        }
                         <Grid size={12}>
                             <Grid container size={12} spacing={3}>
-                                <Grid size={{ xs: 6, lg: 3 }}>
+                                <Grid size={{ xs: 6, lg: 3.3 }}>
                                     <List component={Paper}>
                                         <ListItem>
                                             <ListItemText primary={"Academics"} secondary={<>{Student.year} Year <Link to={`/campus/${Student.school}`}>
                                                 {Student.school}
                                             </Link></>} />
                                         </ListItem>
+                                        {Student.advisors &&
+                                            <ListItem>
+                                                <ListItemText primary={"Advisors"} secondary={Student.advisors.map((advisor, i) => {
+                                                    const adv = getFacultyByShortName(advisor)
+
+                                                    return <>{adv?.dichotomy}: <Link to={`/faculty/${advisor}`}>
+                                                        {advisor}
+                                                    </Link>{i < Student.advisors!.length - 1 ? <br /> : <></>}</>
+                                                })} />
+                                            </ListItem>}
                                         <ListItem>
                                             <ListItemText primary={"Employment"} secondary={Student.jobs.map((job, i) => {
                                                 return <> {job.name} at {
@@ -103,7 +135,7 @@ export function StudentDetails() {
                                         </ListItem>
                                     </List>
                                 </Grid>
-                                <Grid size={{ xs: 6, lg: 3 }}>
+                                <Grid size={{ xs: 6, lg: 3.3 }}>
                                     <List component={Paper}>
                                         {Student.freshRoomies ? <ListItem><ListItemText primary="1st Year Roommates" secondary={Student.freshRoomies.map((roomie, i) => {
                                             return <><Link to={`/student/${roomie}`}>
@@ -129,15 +161,26 @@ export function StudentDetails() {
 
                                     </List>
                                 </Grid>
-                                <Grid size={{ xs: 12, lg: 6 }}>
+                                <Grid size={{ xs: 12, lg: 5.4 }}>
                                     {Student.connections &&
                                         <Card>
                                             <ListItem>
                                                 <ListItemText primary="Notable Connections" secondary={Student.connections.map((connection) => {
-                                                    return <><Link to={getStudentByShortName(connection.name) ?
-                                                        `/student/${connection.name}` : `/faculty/${connection.name}`}>
-                                                        {connection.name}
-                                                    </Link> — {connection.relation}<br /></>
+                                                    if (typeof connection.name === "string") {
+                                                        return <><Link to={getStudentByShortName(connection.name) ?
+                                                            `/student/${connection.name}` : `/faculty/${connection.name}`}>
+                                                            {connection.name}
+                                                        </Link> — {connection.relation}<br /></>
+                                                    } else {
+                                                        return <>{connection.name.map((name, i) =>
+                                                            <>
+                                                            <Link to={getStudentByShortName(name) ?
+                                                                `/student/${connection.name}` : `/faculty/${connection.name}`}>
+                                                                {name}
+                                                            </Link>{i < connection.name.length - 1 ? ", " : ""}
+                                                                </>)}
+                                                         — {connection.relation}<br /></>
+                                                    }
                                                 })} />
                                             </ListItem>
                                         </Card>
@@ -180,25 +223,25 @@ export function StudentDetails() {
                                 </List>
                             </Card>
                         </Grid>
-                            <Drawer
-                                variant={ isMobile || articles.length < 1 ? "temporary": "permanent"}
-                                anchor={isMobile ? "left" : "right"}
-                                open={open}
-                                onClose={() => setOpen(false)}
-                                sx={{
-                                    flexShrink: 0,
-                                    [`& .MuiDrawer-paper`]: { width: isMobile ? '45%' : '10%', boxSizing: 'border-box' },
-                                }}
-                            >
-                                <Toolbar />
-                                <Box sx={{ overflow: 'auto' }}>
-                                    <List>
-                                        {articles.map(article => {
-                                            return <ListItemButton component={Link} to={`/articles?article=${article.title}`}>{article.title}</ListItemButton >
-                                        })}
-                                    </List>
-                                </Box>
-                            </Drawer>
+                        <Drawer
+                            variant={isMobile || articles.length < 1 ? "temporary" : "permanent"}
+                            anchor={isMobile ? "left" : "right"}
+                            open={open}
+                            onClose={() => setOpen(false)}
+                            sx={{
+                                flexShrink: 0,
+                                [`& .MuiDrawer-paper`]: { width: isMobile ? '45%' : '10%', boxSizing: 'border-box' },
+                            }}
+                        >
+                            <Toolbar />
+                            <Box sx={{ overflow: 'auto' }}>
+                                <List>
+                                    {articles.map(article => {
+                                        return <ListItemButton component={Link} to={`/articles?article=${article.title}`}>{article.title}</ListItemButton >
+                                    })}
+                                </List>
+                            </Box>
+                        </Drawer>
                     </>
                     : <Alert severity="warning">
                         {name} does not attend Strixhaven

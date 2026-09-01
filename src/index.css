@@ -23,6 +23,11 @@ div#root {
   margin-top: 2rem;
 }
 
+.MuiListItem-root {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
 a {
   font-weight: 500;
   color: #c898ff;

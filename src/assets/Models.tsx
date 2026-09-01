@@ -8,11 +8,13 @@ shortName: string,
 frequents: Location[],
 image?: string
 connections?: Connection[]
+appearance?: Appearance
 }
 
 export interface Faculty extends Person {
 school: School,
 classes: Class[],
+dichotomy: string,
 title: string
 }
 
@@ -21,9 +23,17 @@ school: School,
 year: "1st" | "2nd" | "3rd" | "4th",
 clubs: Club[],
 jobs: Job[],
-classes: Class[],
-roommates: string[]
+classes?: Class[],
+roommates: string[],
+advisors?: string[],
 freshRoomies?: string[]
+}
+
+export interface Appearance {
+    height: string,
+    eyes: string,
+    hair: string,
+    other?: string[]
 }
 
 export interface Club {
@@ -83,6 +93,6 @@ export interface Article {
 }
 
 export interface Connection {
-    name: string,
+    name: string | string[],
     relation: string
 }

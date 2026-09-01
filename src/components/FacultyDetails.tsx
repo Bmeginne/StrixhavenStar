@@ -1,5 +1,5 @@
 import { Alert, Container, List, ListItemText, Paper, Typography, Grid, ListItem, Card, CardContent, Box, CardMedia, Drawer, ListItemButton, Toolbar, useMediaQuery } from "@mui/material";
-import { getMembersByClub } from "../assets/Students";
+import { getMembersByClub, getStudentsByAdvisor } from "../assets/Students";
 import { Link, useParams } from "react-router-dom";
 import { BIOS } from "../assets/Biographies";
 import { useEffect, useState } from "react";
@@ -15,10 +15,11 @@ export function FacultyDetails() {
 
     const Faculty = getFacultyByShortName(name)
     const Clubs = getClubsByFaculty(Faculty!)
+    const Students = getStudentsByAdvisor(Faculty!.shortName)
     const [logo, setLogo] = useState<string>()
     const [open, setOpen] = useState(false)
 
-    
+
     const articles = getArticlesByTag(Faculty?.shortName ?? "")
 
     useEffect(() => {
@@ -61,7 +62,7 @@ export function FacultyDetails() {
                                 </Grid>
                                 <Grid>
                                     <Typography variant="h5">
-                                        <Link to={`/campus/${Faculty.school}`}>{Faculty.school} </Link>{Faculty?.title}
+                                        <Link to={`/campus/${Faculty.school}`}>{Faculty.school} </Link>{Faculty?.title} of {Faculty.dichotomy}
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -80,9 +81,32 @@ export function FacultyDetails() {
                                 : null
                         }
 
+                        { Faculty.appearance && 
+                            <Grid size={{xs: 4.7, lg:3.3}}>
+                                <List component={Paper}>
+                                    <ListItem>
+                                        <ListItemText primary={"Height"} secondary={Faculty.appearance?.height} />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemText primary={"Eyes"} secondary={Faculty.appearance?.eyes} />
+                                    </ListItem>
+                                    <ListItem>
+                                        <ListItemText primary={"Hair"} secondary={Faculty.appearance?.hair} />
+                                    </ListItem>
+                                    {Faculty.appearance?.other &&
+                                        <ListItem>
+                                            <ListItemText primary={"Other"} secondary={Faculty.appearance?.other?.map((detail, i) =>
+                                                <>{detail}{i < Faculty.appearance!.other!.length - 1 ? <>,<br /></> : <></>}</>
+                                            )} />
+                                        </ListItem>
+                                    }
+                                </List>
+                            </Grid>
+                        }
+
                         <Grid size={12}>
                             <Grid container size={12} spacing={3}>
-                                <Grid size={{ xs: 6, lg: 3 }}>
+                                <Grid size={{ xs: 6, lg: 3.3 }}>
                                     <List component={Paper}>
                                         <ListItem>
                                             <ListItemText primary={"Classes"} secondary={Faculty.classes.map((cls, i) => {
@@ -92,6 +116,18 @@ export function FacultyDetails() {
                                                 </>
                                             })} />
                                         </ListItem>
+                                        {
+                                            Students.length > 0 &&
+                                            <ListItem>
+                                                <ListItemText primary={"Advisees"} secondary={Students.map((student, i) => {
+                                                    return <><Link to={`/student/${student.shortName}`}>
+                                                        {student.shortName}
+                                                    </Link>{i < Students.length - 1 ? ", " : ""}
+                                                    </>
+                                                })
+                                                } />
+                                            </ListItem>
+                                        }
                                         <ListItem>
                                             <ListItemText primary={"Clubs Sponsored"} secondary={Clubs.map((club, i) => {
                                                 return <><Link to={`/club/${club.shortName}`}>
@@ -109,11 +145,21 @@ export function FacultyDetails() {
                                         {Faculty.connections &&
                                             <ListItem>
                                                 <ListItemText primary="Notable Connections" secondary={Faculty.connections.map((connection) => {
-                                                    return <><Link to={
-                                                        getFacultyByShortName(connection.name) ?
+                                                    if (typeof connection.name === "string") {
+                                                        return <><Link to={getFacultyByShortName(connection.name) ?
                                                             `/faculty/${connection.name}` : `/student/${connection.name}`}>
-                                                        {connection.name}
-                                                    </Link> — {connection.relation}<br /></>
+                                                            {connection.name}
+                                                        </Link> — {connection.relation}<br /></>
+                                                    } else {
+                                                        return <>{connection.name.map((name, i) =>
+                                                            <>
+                                                                <Link to={getFacultyByShortName(name) ?
+                                                                    `/faculty/${connection.name}` : `/student/${connection.name}`}>
+                                                                    {name}
+                                                                </Link>{i < connection.name.length - 1 ? ", " : ""}
+                                                            </>)}
+                                                            — {connection.relation}<br /></>
+                                                    }
                                                 })} />
                                             </ListItem>
                                         }

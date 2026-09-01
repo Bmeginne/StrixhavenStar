@@ -15,7 +15,7 @@ export const EXAMPLE_CLASS2: Class = {
     period: "M2"
 }
 
-export const CLASSES: Class[] = [EXAMPLE_CLASS, EXAMPLE_CLASS2]
+export const CLASSES: Class[] = []
 
 export function getClassByShortName(name: string): Class | undefined {
     return CLASSES.find((cls) => cls.shortName === name)

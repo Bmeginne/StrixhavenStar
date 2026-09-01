@@ -31,6 +31,11 @@ export const LABS: Job = new Job(
     "Magic Labs",
 )
 
+export const TA_ROVINA: Job = new Job(
+    "T.A. for Professor Rovina",
+    "Rovina's Classroom"
+)
+
 export const RA_COMM: Job = new Job(
     "Resident Assistant",
     DORMS_COMMON,
@@ -83,6 +88,7 @@ export const JOBS: Job[] = [
     GROUNDS_DRAG,
     GROUNDS_FENS,
     LABS,
+    TA_ROVINA,
     RA_COMM,
     RA_LORE,
     RA_PRIS,
