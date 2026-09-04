@@ -3,6 +3,11 @@
 [Strixhaven Star](https://beereif.github.io/StrixhavenStar)
 
 # Changelog:
+## 1.4.0
+- Change student detail page layout
+- Add appearance details for students, faculty
+- Add support for more flexible connection types
+- Add some initial connections, more bios
 ## 1.3.0
 - Add map viewer
 ## 1.2.1

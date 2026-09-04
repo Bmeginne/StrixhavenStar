@@ -20,7 +20,7 @@ export function FacultyLookup() {
     const rows = FACULTY.map((prof) => {
         return {
             name: { name: prof.name, shortName: prof.shortName },
-            dichotomy: prof.title.split(" ").pop(),
+            dichotomy: prof.dichotomy,
             school: prof.school,
             clubs: getClubsByFaculty(prof),
             classes: prof.classes

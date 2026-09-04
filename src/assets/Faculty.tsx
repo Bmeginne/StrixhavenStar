@@ -53,7 +53,7 @@ export const FACULTY: Faculty[] = [
         name: "Gerard Maddox",
         pronouns: "He/Him",
         shortName: "Maddox",
-        title: "Dean ",
+        title: "Dean",
         dichotomy: "Chaos",
         frequents: [],
         school: "Lorehold",
